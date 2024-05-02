@@ -34,6 +34,7 @@ public class SimulationFrame extends JFrame implements Runnable {
 
     @Override
     public void run() {
+
         double lastFrameTime = 0.0;
         while (!shutdown) {
             double time = Time.getTime();
