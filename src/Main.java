@@ -4,7 +4,7 @@ public class Main {
         Grid testGrid = new Grid();
 
 
-        for (int i = 0; i < Grid.RIGHE; i++) {
+        for (int i = 0; i < Grid.ROWS; i++) {
             testGrid.nextGeneration();
         }
 
