@@ -17,11 +17,6 @@
 //        currentRow = 0;
 //    }
 //
-//    // default starting generation: a single cell in the middle of the first row is set to true (alive)
-//    private void initializeFirstGeneration() {
-//        grid[0][COLUMNS /2] = true;
-//    }
-//
 //
 //
 //

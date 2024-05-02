@@ -36,6 +36,31 @@ public class SimulationPanel extends JPanel {
         generationsGrid[currentGeneration++] = firstGeneration;
     }
 
+    public void setNextGeneration() {
+        generationsGrid[currentGeneration++] = computeNextGeneration();
+    }
+
+    private boolean[] computeNextGeneration() {
+        if (currentGeneration >= ROWS) return null;
+        boolean[] nextGeneration = new boolean[COLUMNS];
+
+        // default condition: first and last cell are always set to false (dead)
+        nextGeneration[0] = false;
+        nextGeneration[COLUMNS -1] = false;
+
+        for (int i = 1; i < COLUMNS -2; i++) {  // skips 2 already set cells
+            int[] clusterState = new int[3];    // saves left neighbor, current cell and right neighbor
+            for (int j = -1; j < 2; j ++) {
+                clusterState[j +1] = generationsGrid[currentGeneration -1][i +j] ? 1 : 0;
+            }
+            int instruction = BinaryOperationsUtils.binaryToDecimal(clusterState);
+            nextGeneration[i] = rule[instruction] == 1;
+        }
+
+        return nextGeneration;
+
+    }
+
     public void setRule(int rule) {
         int[] binaryRule = BinaryOperationsUtils.decimalToBinary(rule);
 

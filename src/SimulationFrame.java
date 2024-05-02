@@ -32,7 +32,7 @@ public class SimulationFrame extends JFrame implements Runnable {
     }
 
     private void update(double deltaTime) {
-        revalidate();
+//        revalidate();
         repaint();
     }
 
@@ -57,6 +57,7 @@ public class SimulationFrame extends JFrame implements Runnable {
 
         getContentPane().removeAll();
         add(SimulationPanel.getInstance());
+        revalidate();
 
         double lastFrameTime = 0.0;
         while (!shutdown) {
