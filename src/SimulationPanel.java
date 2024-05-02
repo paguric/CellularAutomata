@@ -7,17 +7,17 @@ public class SimulationPanel extends JPanel {
     private static SimulationPanel instance = null;
 
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int HEIGHT = 800;
     public static final int ROWS = 200;
     public static final int COLUMNS = 200;
     private int[] rule = new int[8];
-    public boolean[][] generationsGrid = new boolean[ROWS][COLUMNS];
+    private boolean[][] generationsGrid = new boolean[ROWS][COLUMNS];
+    private int currentGeneration = 0;
 
     private SimulationPanel() {
         setSize(WIDTH, HEIGHT);
-        setLayout(new GridLayout());
 
-
+        setFirstGeneration();
 
         setVisible(true);
     }
@@ -27,6 +27,13 @@ public class SimulationPanel extends JPanel {
             instance = new SimulationPanel();
         }
         return instance;
+    }
+
+    // default starting generation: a single cell in the middle of the first row is set to true (alive)
+    private void setFirstGeneration() {
+        boolean[] firstGeneration = new boolean[COLUMNS];
+        firstGeneration[COLUMNS /2] = true;
+        generationsGrid[currentGeneration++] = firstGeneration;
     }
 
     public void setRule(int rule) {
