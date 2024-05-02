@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 // Implements Singleton pattern
 public class SimulationFrame extends JFrame implements Runnable {
@@ -6,17 +7,19 @@ public class SimulationFrame extends JFrame implements Runnable {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
+    public static final int FRAMES_PER_SECOND = 30;
     private volatile boolean shutdown = false;
-
+    private volatile boolean paused = false;
+    private static MainMenu mainMenu = MainMenu.getInstance();
     private SimulationFrame() {
-        setTitle("Cellular Automaton");
+        setTitle("Cellular Automata Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setResizable(false);
 
         // add components here
-        add(MainMenu.getInstance());
+        add(mainMenu);
 
         setVisible(true);
     }
@@ -29,11 +32,31 @@ public class SimulationFrame extends JFrame implements Runnable {
     }
 
     private void update(double deltaTime) {
-
+        revalidate();
+        repaint();
     }
 
     @Override
     public void run() {
+        if (paused) {
+            try {
+                Thread.sleep(30);
+            } catch (Exception e) {
+
+            }
+            return;
+        }
+
+        while(mainMenu.isVisible()) {
+            try {
+                Thread.sleep(FRAMES_PER_SECOND);
+            } catch (Exception e) {
+
+            }
+        }
+
+        getContentPane().removeAll();
+        add(SimulationPanel.getInstance());
 
         double lastFrameTime = 0.0;
         while (!shutdown) {
@@ -44,11 +67,16 @@ public class SimulationFrame extends JFrame implements Runnable {
             update(deltaTime);
 
             try {
-                Thread.sleep(30);
+                Thread.sleep(FRAMES_PER_SECOND);
             } catch (Exception e) {
 
             }
 
         }
     }
+
+    public void unPause() {
+        paused = false;
+    }
+
 }

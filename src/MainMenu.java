@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 // Implements Singleton pattern
 public class MainMenu extends JPanel {
@@ -7,7 +8,7 @@ public class MainMenu extends JPanel {
 
     public static final int WIDTH = SimulationFrame.WIDTH;
     public static final int HEIGHT = SimulationFrame.HEIGHT;
-    private JTextField ruleTextField;
+    private final JTextField ruleTextField;
 
     private MainMenu() {
         setSize(WIDTH, HEIGHT);
@@ -60,8 +61,11 @@ public class MainMenu extends JPanel {
         JButton startButton = new JButton("Start");
         startButton.setPreferredSize(new Dimension(200, 40));
         startButton.setFont(new Font("Arial", Font.PLAIN, 22));
+        startButton.addActionListener(e -> {
+            SimulationPanel.getInstance().setRule(getRule());
+            setVisible(false);
+        });
         lowerPanel.add(startButton, gbc);
-//        startButton.addActionListener(e -> System.out.println(getRule()));
 
         add(upperPanel, gbc);
         gbc.gridy++;

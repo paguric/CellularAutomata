@@ -8,20 +8,7 @@
 //    public Grid() {
 //        this.grid = new boolean[ROWS][COLUMNS];
 //        this.initializeFirstGeneration();
-//        rule = decimalToBinary(DEFAULT_RULE);
 //
-//        // adds leading zeros to the rule array if it has less than 8 elements
-//        if (rule.length < 8) {
-//            int zeros = 8 -rule.length;
-//            int[] rule = new int[8];
-//            for (int i = 0; i < zeros; i++) {
-//                rule[i] = 0;
-//            }
-//            for (int i = zeros; i < 8; i++) {
-//                rule[i] = this.rule[i -zeros];
-//            }
-//            this.rule = rule;
-//        }
 //
 //        // invert the rule array
 //        for (int i = 0; i < 4; i++) {
