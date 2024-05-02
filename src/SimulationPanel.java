@@ -46,14 +46,12 @@ public class SimulationPanel extends JPanel {
         if (currentGeneration >= ROWS) return null;
         boolean[] nextGeneration = new boolean[COLUMNS];
 
-        // default condition: first and last cell are always set to false (dead)
-        nextGeneration[0] = false;
-        nextGeneration[COLUMNS -1] = false;
-
-        for (int i = 1; i < COLUMNS -2; i++) {  // skips 2 already set cells
+        for (int i = 0; i < COLUMNS; i++) {  // skips 2 already set cells
             int[] clusterState = new int[3];    // saves left neighbor, current cell and right neighbor
             for (int j = -1; j < 2; j ++) {
-                clusterState[j +1] = generationsGrid[currentGeneration -1][i +j] ? 1 : 0;
+                int columnIndex = i + j < 0 ? COLUMNS - 1 : i + j >= COLUMNS ? 0 : i + j;
+
+                clusterState[j +1] = generationsGrid[currentGeneration -1][columnIndex] ? 1 : 0;
             }
             int instruction = BinaryOperationsUtils.binaryToDecimal(clusterState);
             nextGeneration[i] = rule[7 - instruction] == 1; // rule is inverted (i don't know why)
