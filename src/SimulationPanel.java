@@ -12,6 +12,7 @@ public class SimulationPanel extends JPanel {
     private int[] rule = new int[8];
     private boolean[][] generationsGrid = new boolean[ROWS][COLUMNS];
     private int currentGeneration = 0;
+    private static boolean infiniteScrolling;
 
     private SimulationPanel() {
         setSize(WIDTH, HEIGHT);
@@ -28,6 +29,10 @@ public class SimulationPanel extends JPanel {
         return instance;
     }
 
+    public static void setInfiniteScrolling(boolean selected) {
+        infiniteScrolling = selected;
+    }
+
     // default starting generation: a single cell in the middle of the first row is set to true (alive)
     private void setFirstGeneration() {
         boolean[] firstGeneration = new boolean[COLUMNS];
@@ -36,7 +41,11 @@ public class SimulationPanel extends JPanel {
     }
 
     public void setNextGeneration() {
-        if (currentGeneration >= ROWS) return;
+        if (currentGeneration >= ROWS) {
+            if (infiniteScrolling)
+                killFirstGeneration();
+            else return;
+        }
         generationsGrid[currentGeneration] = computeNextGeneration();
         currentGeneration++;
     }
@@ -79,6 +88,14 @@ public class SimulationPanel extends JPanel {
         this.rule = binaryRule;
     }
 
+    private void killFirstGeneration() {
+        for (int i = 0; i < ROWS -1; i++) {
+            generationsGrid[i] = generationsGrid[i +1];
+        }
+
+        currentGeneration--;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         int cellWidth = WIDTH / COLUMNS;
@@ -100,6 +117,7 @@ public class SimulationPanel extends JPanel {
     }
 
     public boolean isGenerationComplete() {
+        if (infiniteScrolling) return false;
         return currentGeneration >= ROWS;
     }
 
