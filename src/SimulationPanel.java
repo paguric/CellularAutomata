@@ -37,7 +37,9 @@ public class SimulationPanel extends JPanel {
     }
 
     public void setNextGeneration() {
-        generationsGrid[currentGeneration++] = computeNextGeneration();
+        if (currentGeneration >= ROWS) return;
+        generationsGrid[currentGeneration] = computeNextGeneration();
+        currentGeneration++;
     }
 
     private boolean[] computeNextGeneration() {
@@ -54,7 +56,7 @@ public class SimulationPanel extends JPanel {
                 clusterState[j +1] = generationsGrid[currentGeneration -1][i +j] ? 1 : 0;
             }
             int instruction = BinaryOperationsUtils.binaryToDecimal(clusterState);
-            nextGeneration[i] = rule[instruction] == 1;
+            nextGeneration[i] = rule[7 - instruction] == 1; // rule is inverted (i don't know why)
         }
 
         return nextGeneration;
@@ -88,7 +90,7 @@ public class SimulationPanel extends JPanel {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLUMNS; j++) {
 
-                if (generationsGrid[i][j]) {
+                if (generationsGrid[i] != null && generationsGrid[i][j]) {
                     g.setColor(Color.BLACK);
                 } else {
                     g.setColor(Color.WHITE);

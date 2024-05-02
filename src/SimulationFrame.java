@@ -6,7 +6,7 @@ public class SimulationFrame extends JFrame implements Runnable {
     private static SimulationFrame instance = null;
 
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int HEIGHT = 800;
     public static final int FRAMES_PER_SECOND = 30;
     private volatile boolean shutdown = false;
     private volatile boolean paused = false;
@@ -33,6 +33,7 @@ public class SimulationFrame extends JFrame implements Runnable {
 
     private void update(double deltaTime) {
 //        revalidate();
+        SimulationPanel.getInstance().setNextGeneration();
         repaint();
     }
 
