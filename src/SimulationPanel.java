@@ -100,4 +100,14 @@ public class SimulationPanel extends JPanel {
 
     }
 
+    public boolean isGenerationComplete() {
+        return currentGeneration >= ROWS;
+    }
+
+    public void reset() {
+        currentGeneration = 0;
+        generationsGrid = new boolean[ROWS][COLUMNS];
+        setFirstGeneration();
+    }
+
 }
