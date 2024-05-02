@@ -4,8 +4,8 @@ import javax.swing.*;
 public class SimulationFrame extends JFrame {
     private static SimulationFrame instance = null;
 
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
     private SimulationFrame() {
         setTitle("Cellular Automaton");
@@ -15,6 +15,7 @@ public class SimulationFrame extends JFrame {
         setResizable(false);
 
         // add components here
+        add(MainMenu.getInstance());
 
         setVisible(true);
     }
