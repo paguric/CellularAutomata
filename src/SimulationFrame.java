@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 // Implements Singleton pattern
 public class SimulationFrame extends JFrame implements Runnable {
@@ -10,8 +9,8 @@ public class SimulationFrame extends JFrame implements Runnable {
     public static final int FRAMES_PER_SECOND = 30;
     private volatile boolean shutdown = false;
     private volatile boolean paused = false;
-    private static MainMenu mainMenu = MainMenu.getInstance();
-    private static SimulationPanel simulationPanel = SimulationPanel.getInstance();
+    private static final MainMenu mainMenu = MainMenu.getInstance();
+    private static final SimulationPanel simulationPanel = SimulationPanel.getInstance();
     private SimulationFrame() {
         setTitle("Cellular Automata Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +27,7 @@ public class SimulationFrame extends JFrame implements Runnable {
         return instance;
     }
 
-    private void update(double deltaTime) {
+    private void update() {
 
         simulationPanel.setNextGeneration();
 
@@ -58,7 +57,7 @@ public class SimulationFrame extends JFrame implements Runnable {
             double deltaTime = time - lastFrameTime;
             lastFrameTime = time;
 
-            update(deltaTime);
+            update();
 
             try {
                 Thread.sleep(FRAMES_PER_SECOND);

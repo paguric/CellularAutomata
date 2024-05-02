@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 // Implements Singleton pattern
 public class SimulationPanel extends JPanel {
@@ -54,7 +53,7 @@ public class SimulationPanel extends JPanel {
                 clusterState[j +1] = generationsGrid[currentGeneration -1][columnIndex] ? 1 : 0;
             }
             int instruction = BinaryOperationsUtils.binaryToDecimal(clusterState);
-            nextGeneration[i] = rule[7 - instruction] == 1; // rule is inverted (i don't know why)
+            nextGeneration[i] = rule[7 - instruction] == 1; // rule is inverted (I don't know why)
         }
 
         return nextGeneration;
