@@ -1,9 +1,6 @@
 //public class Grid {
-//    private static final int DEFAULT_RULE = 90; // up to 255
-//    public static final int ROWS = 200;
-//    public static final int COLUMNS = 777;
+
 //    public boolean[][] grid;
-//    private int[] rule;
 //    private static int currentRow;
 //    public Grid() {
 //        this.grid = new boolean[ROWS][COLUMNS];
