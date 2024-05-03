@@ -6,9 +6,9 @@ public class SimulationFrame extends JFrame implements Runnable {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
-    public static final int FRAMES_PER_SECOND = 30;
+    public static final int FRAMES_PER_SECOND = 20;
     private volatile boolean shutdown = false;
-    private volatile boolean paused = false;
+    private volatile boolean running = true;
     private static final MainMenu mainMenu = MainMenu.getInstance();
     private static final SimulationPanel simulationPanel = SimulationPanel.getInstance();
     private SimulationFrame() {
@@ -29,6 +29,10 @@ public class SimulationFrame extends JFrame implements Runnable {
 
     private void update() {
 
+        if (!running) {
+            return;
+        }
+
         simulationPanel.setNextGeneration();
 
         if (simulationPanel.isGenerationComplete()) {
@@ -40,14 +44,6 @@ public class SimulationFrame extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        if (paused) {
-            try {
-                Thread.sleep(FRAMES_PER_SECOND);
-            } catch (Exception e) {
-
-            }
-            return;
-        }
 
         showMenu();
 
@@ -68,13 +64,8 @@ public class SimulationFrame extends JFrame implements Runnable {
         }
     }
 
-    public void unPause() {
-        paused = false;
-    }
-
     private void showMenu() {
 
-        paused = true;
         getContentPane().removeAll();
 
         add(mainMenu);
@@ -90,12 +81,22 @@ public class SimulationFrame extends JFrame implements Runnable {
 
         getContentPane().removeAll();
 
-        unPause();
-
         simulationPanel.reset();
         add(simulationPanel);
 
         revalidate();
+    }
+
+    public void start() {
+        running = true;
+    }
+
+    public void stop() {
+        running = false;
+    }
+
+    public void close() {
+        shutdown = true;
     }
 
 }

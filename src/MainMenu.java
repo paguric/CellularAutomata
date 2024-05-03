@@ -51,13 +51,24 @@ public class MainMenu extends JPanel {
         ruleTextField.setFont(new Font("Arial", Font.PLAIN, 22));
         ruleTextField.setBackground(null);
         ruleTextField.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        ruleTextField.addActionListener(e -> inspectTextField(ruleTextField));
         rulePanel.add(ruleTextField);
 
         gbc.gridy = 0;
         lowerPanel.add(rulePanel, gbc);
         gbc.gridy++;
 
+            // Infinite scrolling checkbox
+        JCheckBox infiniteScrollingCheckBox = new JCheckBox("Infinite scrolling");
+        infiniteScrollingCheckBox.setFont(new Font("Arial", Font.PLAIN, 22));
+        infiniteScrollingCheckBox.setSelected(false);
+        infiniteScrollingCheckBox.addActionListener(e -> {
+            SimulationPanel.setInfiniteScrolling(infiniteScrollingCheckBox.isSelected());
+        });
+
+        lowerPanel.add(infiniteScrollingCheckBox, gbc);
+        gbc.gridy++;
+
+        // Start button
         JButton startButton = new JButton("Start");
         startButton.setPreferredSize(new Dimension(200, 40));
         startButton.setFont(new Font("Arial", Font.PLAIN, 22));
@@ -66,6 +77,7 @@ public class MainMenu extends JPanel {
             setVisible(false);
         });
         lowerPanel.add(startButton, gbc);
+
 
         add(upperPanel, gbc);
         gbc.gridy++;
@@ -82,30 +94,12 @@ public class MainMenu extends JPanel {
     }
 
     // allows only 3 digits to be entered, in the range [0, 255]
-    private void inspectTextField(JTextField textField) {
-        String text = textField.getText();
-        if (text.length() > 3) {
-            textField.setText(text.substring(0, 3));
-        }
-
-        try {
-            int rule = Integer.parseInt(text);
-            if (rule < 0) {
-                textField.setText("0");
-            } else if (rule > 255) {
-                textField.setText("255");
-            }
-        } catch (NumberFormatException e) {
-            textField.setText("");
-        }
-    }
-
     public int getRule() {
         String text = ruleTextField.getText();
         if (text.isEmpty()) {
             return 0;
         }
-        int rule = 0;
+        int rule;
         try {
             rule = Integer.parseInt(text);
             if (rule < 0) {
